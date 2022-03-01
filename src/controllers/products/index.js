@@ -74,10 +74,28 @@ async function deleteProducts(req, res) {
     return res.status(400).json(error.message);
   }
 }
-
+async function getProductsById(req, res) {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ error: "need id in params" });
+  }
+  if (isNaN(id)) {
+    return res.status(400).json({ error: "id must be a number" });
+  }
+  try {
+    const response = await knex("products").where({ id }).returning("*");
+    if (response === 0) {
+      return res.status(404).json({ error: "has nothing in database" });
+    }
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json(error.message);
+  }
+}
 module.exports = {
   createProducts,
   getProducts,
   updateProducts,
   deleteProducts,
+  getProductsById,
 };
