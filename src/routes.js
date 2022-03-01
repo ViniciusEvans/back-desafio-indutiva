@@ -1,6 +1,7 @@
 const express = require("express");
 const routes = express();
 
+const validationFields = require("./middleware/validation");
 const {
   createProducts,
   getProducts,
@@ -8,9 +9,9 @@ const {
   deleteProducts,
 } = require("./controllers/products/index");
 
-routes.post("/createProducts", createProducts);
 routes.get("/getProducts", getProducts);
-routes.put("/updateProducts", updateProducts);
-routes.delete("/deleteProducts", deleteProducts);
+routes.delete("/deleteProducts/:id", deleteProducts);
+routes.post("/createProducts", validationFields, createProducts);
+routes.put("/updateProducts/:id", validationFields, updateProducts);
 
 module.exports = routes;
