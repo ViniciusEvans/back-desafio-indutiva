@@ -11,7 +11,7 @@ const {
 } = require("./controllers/products/index");
 
 routes.get("/getProducts", getProducts);
-routes.get("/getProductsbyId/;id", getProductsById);
+routes.get("/getProductsbyId/:id", getProductsById);
 routes.delete("/deleteProducts/:id", deleteProducts);
 routes.post("/createProducts", validationFields, createProducts);
 routes.put("/updateProducts/:id", validationFields, updateProducts);
